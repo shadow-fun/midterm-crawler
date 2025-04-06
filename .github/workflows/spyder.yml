@@ -29,5 +29,7 @@ jobs:
       with:
         name: api-csv
         path: api.csv
+    env:
+      ACTIONS_STEP_DEBUG: true
 
   
