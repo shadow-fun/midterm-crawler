@@ -1,33 +1,42 @@
+# Workflow 名稱，會出現在 GitHub Actions 頁面上
 name: Daily and Manual API Spider
 
+# 觸發條件
 on:
   schedule:
-    - cron: '0 2 * * *'
-  workflow_dispatch:
+    - cron: '0 2 * * *'  # 每天台灣時間 10:00 (UTC+8)
+  workflow_dispatch:     # 允許手動觸發
 
 jobs:
-  run-api:
-    runs-on: ubuntu-latest
+  run-api:               # 工作名稱
+    runs-on: ubuntu-latest  # 在 Ubuntu 最新環境執行
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # 下載目前 repo 的程式碼
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v4  # 安裝 Python 環境
       with:
-        python-version: '3.10'
+        python-version: '3.10'       # 指定使用 Python 3.10
 
     - name: Install dependencies
-      run: pip install requests pandas
+      run: pip install requests pandas  # 安裝 requests 與 pandas 套件（API 與資料處理用）
 
     - name: Run API crawler
-      run: python api.py
+      run: python api.py  # 執行你的 API 爬蟲程式（api.py）
 
     - name: Commit and push result
       run: |
+        # 設定 Git 使用者資訊（否則無法 commit）
         git config --global user.email "actions@github.com"
         git config --global user.name "GitHub Actions"
+        
+        # 將產出的 CSV 加入版本控制
         git add api.csv
+        
+        # 提交修改
         git commit -m "Update API result [auto]"
+        
+        # 推送到 GitHub（需要設定 workflow 有 write 權限）
         git push
