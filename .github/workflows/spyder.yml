@@ -24,4 +24,10 @@ jobs:
     - name: Run API crawler
       run: python api.py
 
+    - name: Upload result
+      uses: actions/upload-artifact@v3
+      with:
+        name: api-csv
+        path: api.csv
+
   
