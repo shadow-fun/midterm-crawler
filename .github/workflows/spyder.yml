@@ -25,7 +25,7 @@ jobs:
       run: python api.py
 
     - name: Upload result
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v2
       with:
         name: api-csv
         path: api.csv
